@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cross-domain</title>
     <script>
+      window.addEventListener("load", () => {
+        if (localStorage.getItem("optout_domains")) {
+          const data = {
+            optout_domains: localStorage.getItem("optout_domains"),
+          };
+          parent.postMessage(JSON.stringify(data), "*");
+        }
+      });
+      
       window.addEventListener("message", (event) => {
         if (event.data) {
           const data = JSON.parse(event.data);
@@ -20,17 +29,5 @@
   </head>
   <body>
     <h1>Cross domain page</h1>
-    <script>
-      window.addEventListener("load", () => {
-        if (localStorage.getItem("optout_domains")) {
-          const data = {
-            optout_domains: localStorage.getItem("optout_domains"),
-          };
-          parent.postMessage(JSON.stringify(data), "*");
-        }
-      });
-
-      
-    </script>
   </body>
 </html>
