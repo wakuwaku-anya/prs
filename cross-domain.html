@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cross-domain</title>
+  </head>
+  <body>
+    <h1>Cross domain page</h1>
+    <script>
+      window.addEventListener("load", () => {
+        if (localStorage.getItem("optout_domains")) {
+          const data = {
+            optout_domains: localStorage.getItem("optout_domains"),
+          };
+          parent.postMessage(JSON.stringify(data), "*");
+        }
+      });
+
+      window.addEventListener("message", (event) => {
+        if (event.data) {
+          const data = JSON.parse(event.data);
+          if (data["optout_domains"] !== undefined) {
+            console.log("Received", event);
+            localStorage.removeItem("optout_domains");
+            localStorage.setItem("optout_domains", data["optout_domains"]);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
