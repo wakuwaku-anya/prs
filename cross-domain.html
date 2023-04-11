@@ -5,6 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cross-domain</title>
+    <script>
+      window.addEventListener("message", (event) => {
+        if (event.data) {
+          const data = JSON.parse(event.data);
+          if (data["optout_domains"] !== undefined) {
+            console.log("Received", event);
+            localStorage.removeItem("optout_domains");
+            localStorage.setItem("optout_domains", data["optout_domains"]);
+          }
+        }
+      });
+    </script>
   </head>
   <body>
     <h1>Cross domain page</h1>
@@ -18,16 +30,7 @@
         }
       });
 
-      window.addEventListener("message", (event) => {
-        if (event.data) {
-          const data = JSON.parse(event.data);
-          if (data["optout_domains"] !== undefined) {
-            console.log("Received", event);
-            localStorage.removeItem("optout_domains");
-            localStorage.setItem("optout_domains", data["optout_domains"]);
-          }
-        }
-      });
+      
     </script>
   </body>
 </html>
