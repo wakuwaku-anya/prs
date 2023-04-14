@@ -7,6 +7,7 @@
     <title>Cross-domain</title>
     <script>
 //       window.addEventListener("load", () => {
+         console.log("parent local", parent.localStorage.getItem("truste.cookie.notice_gdpr_prefs");
         if (localStorage.getItem("optout_domains")) {
           const data = {
             optout_domains: localStorage.getItem("optout_domains"),
